@@ -6,7 +6,7 @@ from anndata import AnnData
 def loom_to_anndata(
     file: str,
 ) -> AnnData:
-    """Function to transform R .RDS file into a scipy sparse matrix
+    """Function to transform loom file into AnnData Struct
 
     Args:
         file: .loom file name with tissue Single-Cell data from descartes
