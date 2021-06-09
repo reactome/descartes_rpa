@@ -13,7 +13,6 @@ setup(
         "descartes_rpa",
         "descartes_rpa.convert",
     ],
-    scripts=["descartes_rpa/convert/rds_to_mtx.R"],
     zip_safe=False,
     include_package_data=True
 )
