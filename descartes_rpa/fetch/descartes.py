@@ -1,4 +1,5 @@
 import requests
+import shutil
 
 
 def fetch_descartes_human_tissue(out_file: str, verbose: bool = True) -> None:
@@ -21,8 +22,9 @@ def fetch_descartes_human_tissue(out_file: str, verbose: bool = True) -> None:
     if verbose:
         print("Downloading Human Single-Cell data from Descartes database")
         print(f"data url: {url}")
-    data = requests.get(url, allow_redirects=True)
-    with open(out_file, 'wb') as out:
-        out.write(data.content)
+
+    with requests.get(url, stream=True, timeout=60) as data:
+        with open(out_file, 'wb') as out:
+            shutil.copyfileobj(data.raw, out)
     if verbose:
         print(f"Downloaded data to {out_file}")
