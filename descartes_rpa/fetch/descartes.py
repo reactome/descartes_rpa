@@ -14,8 +14,8 @@ def fetch_descartes_tissue(tissue: str, out_file: str) -> None:
 
     """
     url = (
-        "https://atlas.fredhutch.org/data/bbi/descartes/human_gtex/downloads/"
-        f"data_summarize_fetus_data/{tissue}_gene_count.RDS"
+        "https://shendure-web.gs.washington.edu/content/members/cao1025/"
+        "public/FCA_RNA_supp_files/scanpy_cells_by_tissue/{}_processed.loom"
     )
     data = requests.get(url, allow_redirects=True)
     with open(out_file, 'wb') as out:
