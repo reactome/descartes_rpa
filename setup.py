@@ -18,6 +18,8 @@ setup(
     packages=[
         "descartes_rpa",
         "descartes_rpa.convert",
+        "descartes_rpa.fetch",
+        "descartes_rpa.test"
     ],
     zip_safe=False,
     include_package_data=True
