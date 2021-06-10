@@ -3,4 +3,4 @@ python:
   - "3.9"
 
 script:
-  - pip requirements.txt && flake8 && python3 -m unittest discover
+  - pip install -r requirements.txt && flake8 && python3 -m unittest discover
