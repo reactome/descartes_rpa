@@ -1,0 +1,6 @@
+language: python
+python:
+  - "3.9"
+
+script:
+  - pip install -r requirements.txt && flake8 && python3 -m unittest discover

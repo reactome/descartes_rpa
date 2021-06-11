@@ -1,0 +1,5 @@
+scanpy==1.7.2
+requests==2.25.1
+aiohttp==3.7.4
+flake8==3.9.2
+loompy==3.0.6
