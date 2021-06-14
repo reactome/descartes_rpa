@@ -1,7 +1,7 @@
 FROM continuumio/miniconda3
 
-COPY . /descartes-rpa/
-WORKDIR /descartes-rpa/
+COPY . /descartes_rpa/
+WORKDIR /descartes_rpa/
 
 RUN conda env update -n base -f env.yml --prune
 
