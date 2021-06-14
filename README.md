@@ -4,12 +4,14 @@ This project aims to create a dockerized python pipeline to extract pathway acti
 
 ## Installing
 
+Build image
+
 ```bash
-conda env create -f env.yml
+docker-compose build descartes_rpa
 ```
 
-Activate the environment
+Run the image
 
 ```bash
-conda activate descartes-rpa
+docker-compose run --rm descartes_rpa
 ```
