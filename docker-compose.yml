@@ -5,6 +5,6 @@ services:
     build:
       context: .
     volumes:
-      - /home/joao/gsoc/descartes-rpa/data/output:/descartes_rpa/data/output
-      - /home/joao/gsoc/descartes-rpa/data/input:/descartes_rpa/data/input      
+      - ./data/output:/descartes_rpa/data/output
+      - ./data/descartes-rpa/data/input:/descartes_rpa/data/input
     entrypoint: ["/bin/bash"]
