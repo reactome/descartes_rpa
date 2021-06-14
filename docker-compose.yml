@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  descartes_rpa:
+    build:
+      context: .
+    volumes:
+      - /home/joao/gsoc/descartes-rpa/data/output:/descartes_rpa/data/output
+      - /home/joao/gsoc/descartes-rpa/data/input:/descartes-rpa/data/input      
+    entrypoint: ["/bin/bash"]
