@@ -35,7 +35,10 @@ class TestFormatAnnData(unittest.TestCase):
         self.assertEqual(var_names, expected_names)
 
     def test_scanpy_format_x_umap(self):
-        """Test if scanpy formatting can create right X_umap from obs to obsm"""
+        """Test if scanpy formatting can create
+        right X_umap from obs to obsm
+        
+        """
         x_umap = self.adata.obs[
             ["Main_cluster_umap_1", "Main_cluster_umap_2"]
         ].to_numpy()
