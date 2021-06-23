@@ -89,7 +89,8 @@ def scanpy_format(adata: AnnData) -> None:
 def get_pathways_for_group(
     adata: AnnData,
     groupby: str = "Main_cluster_name",
-    method: str = "wilcoxon"
+    method: str = "wilcoxon",
+    n_genes: int = 25
 ) -> None:
     """Get pathways from Reactome using reatome2py
 
@@ -99,12 +100,14 @@ def get_pathways_for_group(
         'Main_cluster_name' or 'leiden'
         method: Methods available in scanpy.tl.rank_genes_group, such as
         't-test' or 'wilcoxon'
+        n_genes: Number of genes to be used as markers for group enrichment
 
     """
     sc.tl.rank_genes_groups(
         adata,
         groupby=groupby,
-        method=method
+        method=method,
+        n_genes=n_genes
     )
 
     unique_groups = adata.obs[groupby].unique().to_list()
