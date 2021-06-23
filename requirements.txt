@@ -3,3 +3,4 @@ requests==2.25.1
 aiohttp==3.7.4
 flake8==3.9.2
 loompy==3.0.6
+reactome2py==3.0.0
