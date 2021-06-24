@@ -5,6 +5,8 @@ from collections import OrderedDict
 from typing import List
 from reactome2py import analysis
 
+from descartes_rpa.fetch.descartes import fetch_de_genes_for_cell_type
+
 
 def list_to_str(gene_list: List[str]) -> str:
     """Transform list of genes into a large string separated by comma to
@@ -92,7 +94,7 @@ def get_pathways_for_group(
     method: str = "wilcoxon",
     n_genes: int = 25
 ) -> None:
-    """Get pathways from Reactome using reatome2py
+    """Get enriched pathways from Reactome using reatome2py
 
     Args:
         adata: AnnData object from descartes atlas
@@ -114,11 +116,31 @@ def get_pathways_for_group(
     pathway_dict = OrderedDict()
     for group in unique_groups:
         genes_str = list_to_str(
-            gene_list=adata.uns["rank_genes_groups"]["names"]\
-                [group].tolist()
+            gene_list=adata.uns["rank_genes_groups"]["names"]
+            [group].tolist()
         )
         pathway_data = enrich_list(genes_str=genes_str)
         pathway_dict[group] = {
             "pathway_data": pathway_data
         }
     adata.uns["pathways"] = pathway_dict
+
+
+def enrich_de_cell_types(adata: AnnData):
+    """Get enriched pathways from Differentially Expressed genes found in
+    Main Cell types annotated by Descartes Human Atlas.
+
+    Args:
+        adata: AnnData object from descartes atlas
+
+    """
+    de_mapping = fetch_de_genes_for_cell_type()
+
+    pathway_dict = OrderedDict()
+    for cell_type, genes in de_mapping.items():
+        de_genes = list_to_str(gene_list=genes)
+        pathway_data = enrich_list(genes_str=de_genes)
+        pathway_dict[cell_type] = {
+            "pathway_data": pathway_data
+        }
+    adata.uns["pathways_de"] = pathway_dict
