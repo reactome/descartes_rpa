@@ -45,8 +45,8 @@ def fetch_de_genes_for_cell_type(
     Returns:
         Dictionary mapping each main cell type to its differentially
         expressed genes. Example: {
-            "Acinar cells": ["MIR1302-11", "FAM138A"],
-            "Myeloid cells": ["CU459201.1", "OR4G4P"] ...
+            "Acinar cells": ["MIR1302-11", "FAM138A", ...],
+            "Myeloid cells": ["CU459201.1", "OR4G4P", ...] ...
         }
 
     """
