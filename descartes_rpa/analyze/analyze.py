@@ -1,4 +1,5 @@
 import scanpy as sc
+import pandas as pd
 
 from anndata import AnnData
 from collections import OrderedDict
@@ -25,7 +26,7 @@ def list_to_str(gene_list: List[str]) -> str:
     return genes_str[1:]
 
 
-def enrich_list(genes_str: str) -> dict:
+def enrich_list(genes_str: str) -> pd.DataFrame:
     """Uses reactome2py identifiers to find enriched
     pathways associated with input list of genes and return it to further
     analysis
@@ -34,7 +35,7 @@ def enrich_list(genes_str: str) -> dict:
         genes_str: Large string with all genes short-names separated by comma
 
     Returns:
-        Dictionary with each pathway enriched found from input genes
+        DataFrame with each pathway enriched found from input genes
         in Reactome
 
     """
@@ -67,7 +68,7 @@ def enrich_list(genes_str: str) -> dict:
         min_entities=None,
         max_entities=None
     )
-    return token_result
+    return pd.DataFrame(token_result["pathways"])
 
 
 def scanpy_format(adata: AnnData) -> None:
@@ -119,14 +120,13 @@ def get_pathways_for_group(
             gene_list=adata.uns["rank_genes_groups"]["names"]
             [group].tolist()
         )
-        pathway_data = enrich_list(genes_str=genes_str)
-        pathway_dict[group] = {
-            "pathway_data": pathway_data
-        }
+        pathway_df = enrich_list(genes_str=genes_str)
+        pathway_dict[group] = pathway_df
+
     adata.uns["pathways"] = pathway_dict
 
 
-def enrich_de_cell_types(adata: AnnData):
+def enrich_de_cell_types(adata: AnnData) -> None:
     """Get enriched pathways from Differentially Expressed genes found in
     Main Cell types annotated by Descartes Human Atlas.
 
@@ -139,8 +139,7 @@ def enrich_de_cell_types(adata: AnnData):
     pathway_dict = OrderedDict()
     for cell_type, genes in de_mapping.items():
         de_genes = list_to_str(gene_list=genes)
-        pathway_data = enrich_list(genes_str=de_genes)
-        pathway_dict[cell_type] = {
-            "pathway_data": pathway_data
-        }
+        pathway_df = enrich_list(genes_str=de_genes)
+        pathway_dict[cell_type] = pathway_df
+
     adata.uns["pathways_de"] = pathway_dict
