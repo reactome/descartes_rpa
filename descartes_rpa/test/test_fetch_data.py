@@ -2,6 +2,7 @@ import unittest
 
 
 from descartes_rpa.fetch.ensebml import ensembl_to_gene
+from descartes_rpa.fetch.descartes import fetch_de_genes_for_cell_type
 
 
 class TestFetchEnsebml(unittest.TestCase):
@@ -20,6 +21,20 @@ class TestFetchEnsebml(unittest.TestCase):
         expected_names = ["DDX11L1", "FAM138A", "MIR1302-2HG"]
         for name in gene_names:
             self.assertIn(name, expected_names)
+
+
+class TestFetchDescartes(unittest.TestCase):
+    """Class to test descartes data fetching"""
+
+    def test_fetch_de_genes(self):
+        """Method to test fetch of Descartes
+        Differentially Expressed genes for each
+        Main Cell type
+        """
+        de_mapping = fetch_de_genes_for_cell_type()
+
+        self.assertEqual(len(de_mapping), 77)
+        self.assertEqual(len(de_mapping["Microglia"]), 782)
 
 
 if __name__ == '__main__':

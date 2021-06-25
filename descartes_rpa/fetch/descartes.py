@@ -1,5 +1,8 @@
 import requests
 import shutil
+import pandas as pd
+
+from typing import Dict, List
 
 
 def fetch_descartes_human_tissue(out_file: str, verbose: bool = True) -> None:
@@ -28,3 +31,46 @@ def fetch_descartes_human_tissue(out_file: str, verbose: bool = True) -> None:
             shutil.copyfileobj(data.raw, out)
     if verbose:
         print(f"Downloaded data to {out_file}")
+
+
+def fetch_de_genes_for_cell_type(
+    verbose: bool = False
+) -> Dict[str, List[str]]:
+    """Function to fetch Differentially Expressed (DE) genes from Descartes
+    Human Atlas from 77 Main Cell types found in 15 Organs.
+
+    Args:
+        verbose: If True (default), print statements about download
+
+    Returns:
+        Dictionary mapping each main cell type to its differentially
+        expressed genes. Example: {
+            "Acinar cells": ["MIR1302-11", "FAM138A", ...],
+            "Myeloid cells": ["CU459201.1", "OR4G4P", ...] ...
+        }
+
+    """
+    url = (
+        "https://atlas.fredhutch.org/data/bbi/descartes/human_gtex/"
+        "downloads/data_summarize_fetus_data/DE_gene_77_main_cell_type.csv"
+    )
+    if verbose:
+        print((
+            "Downloading Human Single-Cell Differentially Expressed"
+            "genes for 77 Main Cell types found in 15 Organs."
+        ))
+        print(f"data url: {url}")
+
+    de_df = pd.read_csv(url)
+
+    cell_types = de_df["max.cluster"].unique()
+    de_mapping = {}
+    for type in cell_types:
+        list_genes = de_df[
+            de_df["max.cluster"] == type
+        ]["gene_id"].tolist()
+        list_genes = [gene.replace("'", "") for gene in list_genes]
+
+        de_mapping[type] = list_genes
+
+    return de_mapping
