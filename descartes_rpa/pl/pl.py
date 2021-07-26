@@ -1,5 +1,5 @@
 import scanpy as sc
-import qgrid
+import pandas as pd
 
 from anndata import AnnData
 
@@ -34,17 +34,18 @@ def marker_genes(
     plot_type[plot_format](adata, n_genes=n_genes, save=name)
 
 
-def pathways(adata: AnnData, cluster_name: str) -> qgrid.QgridWidget:
-    """Returns qgrid widget, creating a nice visualization tool of the pathways
-    annotated in a cluster.
+def pathways(adata: AnnData, cluster_name: str) -> pd.DataFrame:
+    """Returns the pathways DataFrame from a cluster, creating a nice
+    visualization tool of the pathways annotated in that cluster.
 
     Args:
         adata: AnnData structure with ranked genes for all the groups analyzed.
         cluster_name: Name of the cluster to be visualized.
 
     Returns:
-        QGridWidget, creating a nice visualization from a DataFrame in Jupyter
+        DataFrame, creating a nice visualization from it in Jupyter
         Notebook.
 
     """
-    return qgrid.show_grid(adata.uns["pathways"][cluster_name])
+    pd.set_option("display.max_rows", None, "display.max_columns", None)
+    return adata.uns["pathways"][cluster_name]
