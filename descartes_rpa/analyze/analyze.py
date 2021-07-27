@@ -26,13 +26,14 @@ def list_to_str(gene_list: List[str]) -> str:
     return genes_str[1:]
 
 
-def enrich_list(genes_str: str) -> pd.DataFrame:
+def enrich_list(genes_str: str, species: str = "Homo Sapiens") -> pd.DataFrame:
     """Uses reactome2py identifiers to find enriched
     pathways associated with input list of genes and return it to further
     analysis
 
     Args:
         genes_str: Large string with all genes short-names separated by comma
+        species: Species from the Single-Cell libraries.
 
     Returns:
         DataFrame with each pathway enriched found from input genes
@@ -44,7 +45,7 @@ def enrich_list(genes_str: str) -> pd.DataFrame:
         interactors=False,
         page_size="1",
         page="1",
-        species="Homo Sapiens",
+        species=species,
         sort_by="ENTITIES_FDR",
         order="ASC",
         resource="TOTAL",
@@ -57,13 +58,13 @@ def enrich_list(genes_str: str) -> pd.DataFrame:
     token = result["summary"]["token"]
     token_result = analysis.token(
         token,
-        species='Homo sapiens',
-        page_size='-1',
-        page='-1',
-        sort_by='ENTITIES_FDR',
-        order='ASC',
-        resource='TOTAL',
-        p_value='1',
+        species=species,
+        page_size="-1",
+        page="-1",
+        sort_by="ENTITIES_FDR",
+        order="ASC",
+        resource="TOTAL",
+        p_value="1",
         include_disease=False,
         min_entities=None,
         max_entities=None
@@ -92,6 +93,7 @@ def scanpy_format(adata: AnnData) -> None:
 def get_pathways_for_group(
     adata: AnnData,
     groupby: str = "Main_cluster_name",
+    species: str = "Homo Sapiens",
     method: str = "wilcoxon",
     n_genes: int = 25
 ) -> None:
@@ -101,6 +103,7 @@ def get_pathways_for_group(
         adata: AnnData object from descartes atlas
         groupyby: Anndata.obs key to be used for gene grouping, such as
         'Main_cluster_name' or 'leiden'
+        species: Species from the Single-Cell libraries.
         method: Methods available in scanpy.tl.rank_genes_group, such as
         't-test' or 'wilcoxon'
         n_genes: Number of genes to be used as markers for group enrichment

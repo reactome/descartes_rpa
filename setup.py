@@ -19,6 +19,7 @@ setup(
         "descartes_rpa",
         "descartes_rpa.convert",
         "descartes_rpa.fetch",
+        "descartes_rpa.pl",
         "descartes_rpa.analyze",
         "descartes_rpa.test"
     ],
