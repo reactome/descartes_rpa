@@ -11,7 +11,7 @@ setup(
     description="descartes_rpa: Extract pathway features from Single-Cell",
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url="https://github.com/reactome/descartes-rpa",
+    url="https://github.com/reactome/descartes_rpa",
     python_requires=">=3.8",
     author="Joao Luiz de Meirelles",
     author_email="jldemeirelles@gmail.com",
