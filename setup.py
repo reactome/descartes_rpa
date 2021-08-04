@@ -37,7 +37,8 @@ setup(
         "numba==0.53.1",
         "tables==3.6.1",
         "python-igraph==0.9.1",
-        "leidenalg==0.8.4"
+        "leidenalg==0.8.4",
+        "UpSetPlot==0.5.0"
     ],
     include_package_data=True
 )

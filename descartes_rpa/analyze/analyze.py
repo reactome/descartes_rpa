@@ -5,6 +5,7 @@ from anndata import AnnData
 from collections import OrderedDict
 from typing import List
 from reactome2py import analysis
+from functools import reduce
 
 from descartes_rpa.fetch.descartes import fetch_de_genes_for_cell_type
 
@@ -146,3 +147,29 @@ def enrich_de_cell_types(adata: AnnData) -> None:
         pathway_dict[cell_type] = pathway_df
 
     adata.uns["pathways_de"] = pathway_dict
+
+
+def get_shared(adata: AnnData, clusters: List[str]) -> pd.DataFrame:
+    """Returns pathways IDs and names shared between input clusters.
+
+    Args:
+        adata: AnnData structure with ranked genes for all the groups analyzed.
+        clusters: List of clusters names.
+
+    Returns:
+        DataFrame with pathways shared between input clusters.
+
+    """
+    clusters_df = [adata.uns["pathways"][name] for name in clusters]
+    shared_df = reduce(
+        lambda left, right: pd.merge(
+            left,
+            right,
+            on=['stId'],
+            how='inner',
+            suffixes=("", "_b")
+        ),
+        clusters_df
+    )
+
+    return shared_df[["stId", "name"]]

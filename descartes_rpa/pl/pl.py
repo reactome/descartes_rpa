@@ -1,7 +1,10 @@
 import scanpy as sc
 import pandas as pd
+import upsetplot as upset
 
 from anndata import AnnData
+from typing import List
+from matplotlib import pyplot as plt
 
 
 def marker_genes(
@@ -49,3 +52,62 @@ def pathways(adata: AnnData, cluster_name: str) -> pd.DataFrame:
     """
     pd.set_option("display.max_rows", None, "display.max_columns", None)
     return adata.uns["pathways"][cluster_name]
+
+
+def shared_pathways(
+    adata: AnnData,
+    clusters: List[str] = [],
+    file_name: str = "shared_pathways.png",
+    dpi: int = 300,
+    color: str = "cornflowerblue"
+) -> pd.DataFrame:
+    """Plot pathways shared between input clusters using UpSet.
+
+    Args:
+        adata: AnnData structure with ranked genes for all the groups analyzed.
+        clusters: List of clusters names. Default: all clusters.
+        file_name: Name of the plot file output. Default: shared_pathways
+        dpi: Image DPI. Default: 300
+        color: Matplotlib color of UpSet plot. Default: cornflowerblue
+
+    """
+    if not clusters:
+        clusters = adata.uns["pathways"].keys()
+
+    pathways = list(set(sum([
+        list(adata.uns["pathways"][cluster_name].name)
+        for cluster_name in clusters
+    ], [])))
+
+    presence_dict = {
+        cluster_name: [
+            1 if path_name in
+            list(adata.uns["pathways"][cluster_name].name)
+            else 0 for path_name in pathways
+        ] for cluster_name in clusters
+    }
+
+    presence_dict["pathways"] = pathways
+
+    presence_df = pd.DataFrame(presence_dict)
+
+    names = list(presence_df.columns[:-1])
+    presence = presence_df[names].astype(bool)
+    presence = pd.concat(
+        [
+            presence,
+            presence_df[
+                [col for col in presence_df.columns if col not in presence]
+            ]
+        ],
+        axis=1
+    ).set_index(names)
+
+    fig = plt.figure(dpi=dpi, figsize=(24, 16))
+    upset.UpSet(
+        presence,
+        show_counts='%d',
+        facecolor=color,
+        sort_by='cardinality'
+    ).plot(fig=fig)
+    fig.savefig(file_name)
