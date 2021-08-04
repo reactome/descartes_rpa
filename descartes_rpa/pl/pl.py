@@ -59,7 +59,7 @@ def shared_pathways(
     clusters: List[str] = [],
     file_name: str = "shared_pathways.png",
     dpi: int = 300,
-    color: str ="cornflowerblue"
+    color: str = "cornflowerblue"
 ) -> pd.DataFrame:
     """Plot pathways shared between input clusters using UpSet.
 
