@@ -59,16 +59,16 @@ def shared_pathways(
     clusters: List[str] = [],
     file_name: str = "shared_pathways.png",
     dpi: int = 300,
-    color="cornflowerblue"
+    color: str ="cornflowerblue"
 ) -> pd.DataFrame:
-    """Returns pathways IDs and names shared between input clusters.
+    """Plot pathways shared between input clusters using UpSet.
 
     Args:
         adata: AnnData structure with ranked genes for all the groups analyzed.
-        clusters: List of clusters names. Default gets all clusters.
-        file_name: TO DO;
+        clusters: List of clusters names. Default: all clusters.
+        file_name: Name of the plot file output. Default: shared_pathways
         dpi: Image DPI. Default: 300
-        color: TO DO;
+        color: Matplotlib color of UpSet plot. Default: cornflowerblue
 
     """
     if not clusters:
