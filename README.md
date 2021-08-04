@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/reactome/descartes_rpa.svg?branch=main)](https://travis-ci.com/reactome/descartes_rpa)
-[![PyPI version](https://badge.fury.io/py/descartes_rpa.svg)](https://badge.fury.io/py/descartes_rpa)
+[![PyPI version](https://badge.fury.io/py/descartes-rpa.svg)](https://badge.fury.io/py/descartes-rpa)
 
 # descartes_rpa
 

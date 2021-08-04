@@ -7,7 +7,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="descartes_rpa",
-    version="1.1",
+    version="1.2",
     description="descartes_rpa: Extract pathway features from Single-Cell",
     long_description=long_description,
     long_description_content_type='text/markdown',
