@@ -103,7 +103,7 @@ def shared_pathways(
         axis=1
     ).set_index(names)
 
-    fig = plt.figure(dpi=dpi, figsize=(24,16))
+    fig = plt.figure(dpi=dpi, figsize=(24, 16))
     upset.UpSet(
         presence,
         show_counts='%d',
