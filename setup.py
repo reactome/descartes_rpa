@@ -38,7 +38,8 @@ setup(
         "tables==3.6.1",
         "python-igraph==0.9.1",
         "leidenalg==0.8.4",
-        "UpSetPlot==0.5.0"
+        "UpSetPlot==0.6.1",
+        "matplotlib==3.5.2",
     ],
     include_package_data=True
 )
